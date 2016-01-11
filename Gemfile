@@ -3,8 +3,8 @@
 
 source 'http://rubygems.org'
 
-gem 'datarepos_base_errors', github: 'datarepos/datarepos_base_errors'
-gem 'spidr', github: 'postmodern/spidr'
-
 # Specify your gem's dependencies in gemspec
 gemspec
+
+gem 'datarepos_base_errors', git: 'git://github.com/datarepos/datarepos_base_errors'
+gem 'spidr', git: 'git://github.com/postmodern/spidr.git'

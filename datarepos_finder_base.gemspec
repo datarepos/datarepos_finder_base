@@ -8,4 +8,6 @@ Gem::Specification.new do |s|
   s.email       = 'bmck@datarepos.xyz'
   s.files       = ["lib/datarepos_finder_base.rb"]
   s.homepage    = 'http://www.datarepos.xyz'
+  s.add_dependency 'spidr'
+  s.add_dependency 'datarepos_base_errors'
 end
