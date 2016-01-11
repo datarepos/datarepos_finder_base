@@ -1,6 +1,9 @@
 # $Id$
 # $(c)$
 
+require_relative '../../models/datarepos/repo.rb'
+require_relative '../../models/datarepos/seed_url.rb'
+
 module Datarepos
   class FindStuff < ActiveJob::Base
     attr_reader :agent
