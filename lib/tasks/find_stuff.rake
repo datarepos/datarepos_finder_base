@@ -3,6 +3,6 @@
 
 namespace :jobs do
   task :find_stuff => :environment do
-    FindStuff.new.perform
+    DataRepos::FindStuff.new.perform
   end
 end
