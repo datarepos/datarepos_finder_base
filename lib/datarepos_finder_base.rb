@@ -1,5 +1,6 @@
 # $Id$
 # $(c)$
+require 'open-uri'
 
 require_relative 'datarepos/finder_base/version.rb'
 

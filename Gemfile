@@ -6,5 +6,5 @@ source 'http://rubygems.org'
 gem 'datarepos_base_errors', github: 'datarepos/datarepos_base_errors'
 gem 'spidr', github: 'postmodern/spidr'
 
-# Specify your gem's dependencies in quandl.gemspec
+# Specify your gem's dependencies in gemspec
 gemspec

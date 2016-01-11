@@ -49,17 +49,13 @@ module Datarepos
       Spidr.start_at(url, {max_depth: depth}) do |spider|
         spider.every_page do |page|
           format_validators.each do |validator_klass|
-            return if validate_format(validator_klass, page)
+            break if validate_format(validator_klass, page)
           end
         end
       end
     end
 
-
-
     private
-
-
 
     def validate_format(validator_klass, page)
       # puts "#{__FILE__}:#{__LINE__} here, page = #{page.inspect}"

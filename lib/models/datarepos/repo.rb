@@ -3,11 +3,42 @@
 
 module Datarepos
   class Repo < ActiveRecord::Base
-    include Datarepos::LocalizedVersion
-    # serialize :command_set
 
-    # attr_writer :cmd_set
-    # attr_reader :commands
+    class TmpLocalCopy
+      attr_reader :uri
+
+      def initialize(uri)
+        @uri = uri
+      end
+
+      def file
+        @file ||= Tempfile.new(tmp_filename, tmp_folder, encoding: encoding).tap do |f|
+          io.rewind
+          f.write(io.read)
+          f.close
+        end
+      end
+
+      def io
+        @io ||= uri.open
+      end
+
+      def encoding
+        io.rewind
+        io.read.encoding
+      end
+
+      def tmp_filename
+        [
+          Pathname.new(uri.path).basename,
+          Pathname.new(uri.path).extname
+        ]
+      end
+
+      def tmp_folder
+        Rails.env.production? ? File.join('','tmp') : Rails.root.join('tmp')
+      end
+    end
 
     validates :name, presence: true
     validates :initial_uri, presence: true
@@ -42,10 +73,14 @@ module Datarepos
     end
 
     alias_method :fetch, :save_file
+    alias_method :save_csv_file, :save_file
 
     def csv_dataset
-      stuff = FindStuff.fetch(initial_uri)
-      @csv_dataset ||= (validated_format.constantize).try(:to_csv, stuff)
+      stuff = TmpLocalCopy.new(initial_uri).file
+      @csv_dataset ||= (validated_format.constantize).try(:to_csv, stuff.path)
+    ensure
+      stuff.close
+      stuff.unlink
     end
   end
 end
